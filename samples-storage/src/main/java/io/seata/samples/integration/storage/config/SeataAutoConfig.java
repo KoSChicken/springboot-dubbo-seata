@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 /**
  * @Author: heshouyou
@@ -28,8 +27,6 @@ public class SeataAutoConfig {
      *
      * @Return: druidDataSource  datasource instance
      */
-    @Bean
-    @Primary
     public DruidDataSource druidDataSource(){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setUrl(dataSourceProperties.getUrl());
@@ -58,8 +55,8 @@ public class SeataAutoConfig {
      * @Return: DataSourceProxy  datasource proxy
      */
     @Bean
-    public DataSourceProxy dataSourceProxy(DruidDataSource druidDataSource){
-        return new DataSourceProxy(druidDataSource);
+    public DataSourceProxy dataSourceProxy(){
+        return new DataSourceProxy(druidDataSource());
     }
 
     /**
