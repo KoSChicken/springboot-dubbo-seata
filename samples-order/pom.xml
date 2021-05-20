@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~  Copyright 1999-2018 Alibaba Group Holding Ltd.
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~  limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>io.seata</groupId>
+        <artifactId>springboot-dubbo-seata</artifactId>
+        <version>1.1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+    <artifactId>samples-order</artifactId>
+    <name>samples-order ${project.version}</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>samples-common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>2.11.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <artifactId>nacos-client</artifactId>-->
+        <!--                    <groupId>com.alibaba.nacos</groupId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba</groupId>-->
+        <!--            <artifactId>dubbo-registry-nacos</artifactId>-->
+        <!--        </dependency>-->
+
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba.nacos</groupId>-->
+        <!--            <artifactId>nacos-client</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba.boot</groupId>-->
+        <!--            <artifactId>nacos-config-spring-boot-starter</artifactId>-->
+        <!--            <exclusions>-->
+        <!--                <exclusion>-->
+        <!--                    <artifactId>nacos-client</artifactId>-->
+        <!--                    <groupId>com.alibaba.nacos</groupId>-->
+        <!--                </exclusion>-->
+        <!--            </exclusions>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>org.mybatis.spring.boot</groupId>-->
+        <!--            <artifactId>mybatis-spring-boot-starter</artifactId>-->
+        <!--        </dependency>-->
+
+        <!--        <dependency>-->
+        <!--            <groupId>com.baomidou</groupId>-->
+        <!--            <artifactId>mybatis-plus</artifactId>-->
+        <!--        </dependency>-->
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jooq</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.3</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${jooq.version}</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jdbc>
+                        <driver>com.mysql.cj.jdbc.Driver</driver>
+                        <url>jdbc:mysql://192.168.60.142:3306</url>
+                        <user>root</user>
+                        <password>123456</password>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <name>org.jooq.meta.mysql.MySQLDatabase</name>
+                            <includes>.*</includes>
+                            <inputSchema>seata</inputSchema>
+                            <unsignedTypes>false</unsignedTypes>
+                        </database>
+                        <generate>
+                            <pojos>true</pojos>
+                            <fluentSetters>true</fluentSetters>
+                            <pojosToString>true</pojosToString>
+                            <generatedAnnotation>false</generatedAnnotation>
+                            <generatedSerialVersionUID>HASH</generatedSerialVersionUID>
+                        </generate>
+                        <target>
+                            <packageName>io.seata.samples.integration.order.db</packageName>
+                            <directory>target/generated-sources</directory>
+                        </target>
+                    </generator>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
